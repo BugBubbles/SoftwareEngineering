@@ -88,4 +88,60 @@ void rect_point_list(p_rect_c rect, float *list_x, float *list_y)
   }
 
 }
-void poly_point_list();
+
+//从poly_1,到一个正多边形的点列表,
+void poly_point_list(p_poly_c poly, float *list_x, float *list_y)
+{
+  p_point_v cnt = new_point();
+  read_poly_center(poly, cnt);
+  float rad;
+  read_poly_radius(poly, &rad);
+  float cnt_x, cnt_y;
+  read_point(cnt, &cnt_x, &cnt_y);
+  unsigned int num_apex;
+  read_poly_num_apex(poly,&num_apex);
+  int iter = 0;
+
+  unsigned int num_point=num_apex;   //端点数和边数是相同的（因为是闭合的）
+
+  float point_x[20]={0};   //定义一个数组来存各顶点的x，y坐标，假设最多有20个顶点
+  float point_y[20]={0};
+  if (num_point%2==0)  //当有偶数个端点时
+  {
+     for (int i = 0; i < num_point; i++)
+    {
+      point_x[i]=sin(360/num_point*(2*i+1)/2);
+      point_y[i]=cos(360/num_point*(2*i+1)/2);
+    }
+  }
+  else   //当有奇数个端点时
+  {
+    for (int i = 0; i < num_point; i++)
+    {
+      point_x[i]=sin(360/num_point*(2*i)/2);
+      point_y[i]=soc(360/num_point*(2*i)/2);
+
+    }
+  }
+  
+  //该逐条边输出了
+  for (int i = 0; i < (num_point-1); i++)    //对前num_apex-1条边，符合第一个循环输出点列表
+      {
+        while (iter>=(NUM_POINTS/num_point*i)&&iter<(NUM_POINTS/num_point*(i+1)))
+    {
+      *(list_x + iter) = point_x[i] + (point_x[i+1]-point_x[i])/(NUM_POINTS/num_point)*iter;
+      *(list_y + iter) = point_y[i] + (point_y[i+1]-point_y[i])/(NUM_POINTS/num_point)*iter;
+      iter++;
+    }
+      }
+  for (int i = (num_point-1); i < num_point; i++)   //对最后一条边单独输出点列表
+  {
+      while (iter>=(NUM_POINTS/num_point*i)&&iter<(NUM_POINTS/num_point*(i+1)))
+    {
+      *(list_x + iter) = point_x[i] + (point_x[0]-point_x[i])/(NUM_POINTS/num_point)*iter;
+      *(list_y + iter) = point_y[i] + (point_y[0]-point_y[i])/(NUM_POINTS/num_point)*iter;
+      iter++;
+    }
+  } 
+}  
+
