@@ -40,5 +40,52 @@ void line_point_list(p_line_c line, float *list_x, float *list_y)
   }
 }
 
-void rect_point_list();
+void rect_point_list(p_rect_c rect, float *list_x, float *list_y)
+{
+  p_point_v point_1 = new_point();
+  p_point_v point_2 = new_point();
+
+  read_rect_point(rect, point_1, point_2);
+  float point_1_x, point_1_y;
+  read_point(point_1, &point_1_x, &point_1_y);
+  float point_2_x, point_2_y;
+  read_point(point_2, &point_2_x, &point_2_y);
+
+  int iter = 0;
+
+  int perim_x=abs(point_1_x-point_2_y);   //计算矩形边长以便进行像素数分布
+  int perim_y=abs(point_1_y-point_2_y);
+
+  int NUM_POINTS_x=NUM_POINTS*perim_x/(2*(perim_x+perim_y));    //对各边进行像素数分布
+  int NUM_POINTS_y=NUM_POINTS*perim_y/(2*(perim_x+perim_y));
+
+  while (iter < NUM_POINTS_x)   //逐边传出点的横坐标列表、点的纵坐标列表
+  {
+    *(list_x + iter) = point_1_x + (point_2_x - point_1_x) / NUM_POINTS_x * iter;
+    *(list_y + iter) = point_1_y ;
+    iter++;
+  }
+
+  while (iter >= NUM_POINTS_x&&iter < 2*NUM_POINTS_x)
+  {
+    *(list_x + iter) = point_1_x + (point_2_x - point_1_x) / NUM_POINTS_x * iter;
+    *(list_y + iter) = point_2_y ;
+    iter++;
+  }
+
+  while (iter >= 2*NUM_POINTS_x&&iter < (2*NUM_POINTS_x+NUM_POINTS_y))
+  {
+    *(list_x + iter) = point_1_x;
+    *(list_y + iter) = point_1_y + (point_2_y - point_1_y) / NUM_POINTS_y * iter;
+    iter++;
+  }
+
+  while (iter >= (2*NUM_POINTS_x+NUM_POINTS_y&&iter < NUM_POINTS))
+  {
+    *(list_x + iter) = point_2_x;
+    *(list_y + iter) = point_1_y + (point_2_y - point_1_y) / NUM_POINTS_y * iter;
+    iter++;
+  }
+
+}
 void poly_point_list();
