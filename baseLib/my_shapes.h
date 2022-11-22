@@ -33,6 +33,11 @@ extern "C"
   //读取圆的数据
   void read_circ_radius(p_circ_c circ, float *rad);
   void read_circ_center(p_circ_c circ, p_point_v cnt);
+  //读取正多边形数据
+  void read_poly_center(p_poly_c poly, p_point_v cnt);
+  void read_poly_radius(p_poly_c poly, float *rad);
+  void read_poly_num_apex(p_poly_c poly, unsigned int *num_apex);
+
 #ifdef __cplusplus
 }
 #endif
