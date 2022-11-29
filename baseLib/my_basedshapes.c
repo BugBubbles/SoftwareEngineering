@@ -50,8 +50,34 @@ void read_rect_data(p_rect_c rect, p_point_v point_1, p_point_v point_2)
   my_memcpy(point_1, &(rect->left_up), sizeof(point));
   my_memcpy(point_2, &(rect->right_down), sizeof(point));
 }
+<<<<<<< HEAD:baseLib/my_basedshapes.c
 void read_circ_data(p_circ_c circ, p_point_v cnt, float *rad)
 {
   my_memcpy(cnt, &(circ->center), sizeof(point));
   *rad = circ->radius;
 }
+=======
+//读取圆数据
+void read_circle_radius(p_circ_c circ, float *rad)
+{
+  my_memcpy(rad, &(circ->radius), sizeof(float));
+}
+void read_circle_center(p_circ_c circ, p_point_v cnt)
+{
+   my_memcpy(cnt, &(circ->center), sizeof(point));
+}
+
+//读取正多边形数据
+void read_poly_radius(p_poly_c poly, float *rad)
+{
+  my_memcpy(rad, &(poly->radius), sizeof(float));
+}
+void read_poly_center(p_poly_c poly, p_point_v cnt)
+{
+  my_memcpy(cnt, &(poly->center), sizeof(point));
+}
+void read_ploly_num_apex(p_poly_c poly, unsigned int *num_apex)
+{
+  my_memcpy(num_apex, &(poly->num_apex), sizeof(unsigned int));
+}
+>>>>>>> 65690ee990f8b73ebb6b0744f9eb6f3732cfc6e2:baseLib/my_shapes.c

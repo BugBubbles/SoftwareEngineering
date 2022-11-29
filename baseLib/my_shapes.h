@@ -29,12 +29,24 @@ extern "C"
   //读取直线命令序列的数据
   void read_line_data(p_line_c line, p_point_v point_1, p_point_v point_2);
   //读取矩形命令序列的数据
+<<<<<<< HEAD
   void read_rect_data(p_rect_c rect, p_point_v point_1, p_point_v point_2);
   //读取圆命令序列的数据
   void read_circ_data(p_circ_c circ, p_point_v cnt, float *rad);
   //读取多边形命令序列的数据
   void read_poly_data(p_poly_c poly, p_point_v cnt);
   
+=======
+  void read_rect_point(p_rect_c rect, p_point_v point_1, p_point_v point_2);
+  //读取圆的数据
+  void read_circ_radius(p_circ_c circ, float *rad);
+  void read_circ_center(p_circ_c circ, p_point_v cnt);
+  //读取正多边形数据
+  void read_poly_center(p_poly_c poly, p_point_v cnt);
+  void read_poly_radius(p_poly_c poly, float *rad);
+  void read_poly_num_apex(p_poly_c poly, unsigned int *num_apex);
+
+>>>>>>> 65690ee990f8b73ebb6b0744f9eb6f3732cfc6e2
 #ifdef __cplusplus
 }
 #endif
