@@ -6,6 +6,7 @@
 extern "C"
 {
 #endif
+//将圆、直线、矩阵、多边形转换为点列表
 void circ_point_list(p_circ_c circ, float *list_x, float *list_y);
 void line_point_list(p_line_c line, float* list_x, float* list_y);
 

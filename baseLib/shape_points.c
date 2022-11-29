@@ -8,11 +8,10 @@
 void circ_point_list(p_circ_c circ, float *list_x, float *list_y)
 {
   p_point_v cnt = new_point();
-  read_circ_center(circ, cnt);
   float rad;
-  read_circ_radius(circ, &rad);
+  read_circ_data(circ, cnt, &rad);
   float cnt_x, cnt_y;
-  read_point(cnt, &cnt_x, &cnt_y);
+  read_point_data(cnt, &cnt_x, &cnt_y);
   int iter = 0;
   while (iter < NUM_POINTS)
   {
@@ -25,12 +24,12 @@ void line_point_list(p_line_c line, float *list_x, float *list_y)
   p_point_v point_1 = new_point();
   p_point_v point_2 = new_point();
 
-  read_line_point(line, point_1, point_2);
+  read_line_data(line, point_1, point_2);
 
   float point_1_x, point_1_y;
-  read_point(point_1, &point_1_x, &point_1_y);
+  read_point_data(point_1, &point_1_x, &point_1_y);
   float point_2_x, point_2_y;
-  read_point(point_2, &point_2_x, &point_2_y);
+  read_point_data(point_2, &point_2_x, &point_2_y);
 
   int iter = 0;
   while (iter < NUM_POINTS)

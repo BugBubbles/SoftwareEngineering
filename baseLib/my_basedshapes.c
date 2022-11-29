@@ -3,6 +3,7 @@
 #include "my_list.h"
 #include <assert.h>
 #include <malloc.h>
+#include "my_coordinate.h"
 typedef struct point
 {
   float x_val;
@@ -25,27 +26,32 @@ typedef struct rect
 } rect;
 typedef struct poly
 {
-  uint num_apex;
-  p_list_c p_apex_list;
+  uint num_apex;//顶点数量
+  p_list_c p_apex_list;//顶点坐标点列表
 } poly;
 typedef struct group
 {
-  uint num_shape;
-  p_list_c p_shape_list;
+  uint num_shape;//形状数量
+  p_list_c p_shape_list;//形状的指针列表
 } gtoup;
-void read_point(p_point_c point, float *x_val, float *y_val)
+void read_point_data(p_point_c point, float *x_val, float *y_val)
 {
   *x_val = point->x_val;
   *y_val = point->y_val;
 }
-void read_line_point(p_line_c line, p_point_v point_1, p_point_v point_2)
+void read_line_data(p_line_c line, p_point_v point_1, p_point_v point_2)
 {
   my_memcpy(point_1, &(line->point_1), sizeof(point));
   my_memcpy(point_2, &(line->point_2), sizeof(point));
 }
 //实际上，矩形的存储与线是一样的，都是两个点的坐标，但为了区分，还是单独写一个read_rect_point函数
-void read_rect_point(p_rect_c rect, p_point_v point_1, p_point_v point_2)
+void read_rect_data(p_rect_c rect, p_point_v point_1, p_point_v point_2)
 {
   my_memcpy(point_1, &(rect->left_up), sizeof(point));
   my_memcpy(point_2, &(rect->right_down), sizeof(point));
+}
+void read_circ_data(p_circ_c circ, p_point_v cnt, float *rad)
+{
+  my_memcpy(cnt, &(circ->center), sizeof(point));
+  *rad = circ->radius;
 }

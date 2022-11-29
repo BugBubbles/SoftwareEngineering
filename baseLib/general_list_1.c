@@ -1,7 +1,9 @@
-/*by李翔，通用线性表*/
+
 #include "general_list.h"
 #include "string.h"
 #include <stdlib.h>
+
+#define _DEFINE_POINT_
 typedef unsigned int size_t;
 //使用顺序表
 /*剩下两种选项是使用指针数组和使用链表*/

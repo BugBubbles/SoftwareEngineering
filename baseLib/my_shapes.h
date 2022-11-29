@@ -24,15 +24,17 @@ extern "C"
   typedef struct poly *p_poly_v;
   //创建点
   p_point_v new_point();
-  //调用形状命令序列的函数
-  void read_point(p_point_c point,float *x_val,float *y_val);
+  //读取点命令序列的数据
+  void read_point_data(p_point_c point, float *x_val, float *y_val);
   //读取直线命令序列的数据
-  void read_line_point(p_line_c line, p_point_v point_1, p_point_v point_2);
+  void read_line_data(p_line_c line, p_point_v point_1, p_point_v point_2);
   //读取矩形命令序列的数据
-  void read_rect_point(p_rect_c rect, p_point_v point_1, p_point_v point_2);
-  //读取圆的数据
-  void read_circ_radius(p_circ_c circ, float *rad);
-  void read_circ_center(p_circ_c circ, p_point_v cnt);
+  void read_rect_data(p_rect_c rect, p_point_v point_1, p_point_v point_2);
+  //读取圆命令序列的数据
+  void read_circ_data(p_circ_c circ, p_point_v cnt, float *rad);
+  //读取多边形命令序列的数据
+  void read_poly_data(p_poly_c poly, p_point_v cnt);
+  
 #ifdef __cplusplus
 }
 #endif
