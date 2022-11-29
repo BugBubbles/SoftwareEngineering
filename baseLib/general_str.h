@@ -1,6 +1,6 @@
 /*by李翔，通用线性表*/
-#ifndef _SHAPE_POINTS_
-#define _SHAPE_POINTS_
+#ifndef _GENERAL_STR_
+#define _GENERAL_STR_
 
 #ifdef __cplusplus
 extern "C"

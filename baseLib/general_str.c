@@ -1,5 +1,5 @@
 
-#include "general_list.h"
+#include "general_str.h"
 #include "string.h"
 #include <stdlib.h>
 
