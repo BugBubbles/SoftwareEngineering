@@ -11,143 +11,118 @@ typedef unsigned int uint;
 typedef char byte;
 typedef struct _glst_
 {
-  size_t uint_size; //每个子块实际占用空间
-  size_t cap_size;  //数据部分总共占据的内存空间
-  byte *buff;       //每个子块是一串连续的内存空间，可以直接存一个字符串
+  //每个子块实际占用空间
+  size_t node_size;
+  //数据部分总共占据的内存空间
+  size_t cap_size;
+  //每个子块是一串连续的内存空间，可以直接存一个字符串
+  byte *buff;
 } _glst_;
 
-glstv_t gstr_new(size_t _size)
+glstv_t glst_new(size_t _size)
 { //默认只创建一个元素那个大的线性表
   glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
   temp->cap_size = _size;
-  temp->uint_size = _size;
+  temp->node_size = _size;
   temp->buff = (byte *)malloc(_size * sizeof(byte));
   return temp;
 }
-glstv_t gstr_new_byCStr(const char *s)
-{
-  char *p = s;
-  uint i = 0;
-  while (*(p + i) != '\0')
-  {
-    i++;
-  }
-  glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
-  temp->cap_size = i * sizeof(char);
-  temp->uint_size = sizeof(char);
-  temp->buff = (byte *)malloc(temp->cap_size * sizeof(byte));
-  memcpy(temp->buff, p, temp->cap_size);
-  return temp;
-}
-glstv_t gstr_new_bySize(size_t _size, int size)
+glstv_t glst_new_bySize(size_t nodesize, size_t initsize)
 {
   glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
-  temp->cap_size = _size * size;
-  temp->uint_size = _size;
-  temp->buff = (byte *)malloc(_size * size * sizeof(byte));
+  temp->cap_size = nodesize * initsize;
+  temp->node_size = nodesize;
+  temp->buff = (byte *)malloc(nodesize * initsize * sizeof(byte));
 }
-void gstr_destroy(glstv_t s)
+void glst_destroy(glstv_t lst)
 {
-  free(s->buff);
-  s->cap_size = 0;
-  s->uint_size = 0;
-  free(s);
+  free(lst->buff);
+  lst->cap_size = 0;
+  lst->node_size = 0;
+  free(lst);
 }
-void gstr_import(glstv_t this, const char *src)
+int glst_len(glstc_t s)
 {
-  char *p = src;
-  uint i = 0;
-  while (*(p + i) != '\0')
+  return (s->cap_size / s->node_size);
+}
+void glst_getnode(glstc_t this, size_t pos, nodev_t buf)
+{
+  memcpy(buf, pos * (this->node_size), this->buff);
+}
+void glst_setnode(glstv_t this, size_t pos, nodec_t buf)
+{
+  memcpy(this->buff, pos * (this->node_size), buf);
+}
+int glst_findNode(glstc_t lst, nodec_t node)
+{
+  int iter;
+  int len = glst_len(lst);
+  for (iter = 0; iter < len; iter += lst->node_size)
   {
-    i++;
-  }
-  free(this->buff);
-  this->cap_size = i * sizeof(char);
-  this->uint_size = sizeof(char);
-  this->buff = (byte *)malloc(this->cap_size * sizeof(byte));
-  memcpy(this->buff, p, this->cap_size);
-}
-void gstr_export(glstc_t this, char *dst)
-{
-  memcpy(dst, this->buff, this->cap_size);
-}
-int gstr_len(glstc_t s)
-{
-  return (s->cap_size / s->uint_size);
-}
-//仅比较字典序
-#define _NOT_COMPARABLE_ -2
-int gstr_cmp(glstc_t a, glstc_t b)
-{
-  if (a->uint_size == b->uint_size)
-  {
-    return memcmp(a->buff, b->buff, a->cap_size);
-  }
-  else
-  {
-    return _NOT_COMPARABLE_;
-  }
-}
-#define NO_FIND -1
-int gstr_findChr(glstc_t s, char c)
-{
-  if (s->uint_size == sizeof(char))
-  {
-    char *p = s->buff;
-    size_t len = gstr_len(s);
-    size_t i = 0;
-    while (i < len)
+    if (memcmp(*(lst->buff + iter), node, lst->node_size) == 0)
     {
-      if (*(p + i) == c)
-      {
-        return i; //有的，返回序列值
-      }
-      else
-      {
-        i++;
-      }
+      return iter;
     }
   }
-  return NO_FIND; //未查到，返回-1;
+  return -1;
 }
-void gstr_append(glstv_t d, glstc_t s)
+void glst_assign(glstv_t dst, glstc_t src)
 {
-  if (d->uint_size == s->uint_size)
+  uint dst_len = glst_len(dst);
+  uint src_len = glst_len(src);
+  uint len = dst_len;
+  if (len > src_len)
   {
-    realloc(d->buff, s->cap_size);
-    memcpy(d->buff + gstr_len(d), s->buff, d->cap_size);
-    d->cap_size += s->cap_size;
+    len = src_len;
+  }
+  dst->cap_size = src->node_size * len;
+  memcpy(dst->buff, src->buff, dst->cap_size);
+}
+
+void glst_insertNode(glstv_t dst, nodec_t node, int pos)
+{
+  uint len = glst_len(dst);
+  if (pos > len || pos < 0)
+  {
+    return;
+  }
+  uint clip_size = pos * dst->node_size;
+  glstv_t glst_temp = glst_new_bySize(dst->node_size, len + 1);
+  memcpy(glst_temp->buff, dst->buff, clip_size);
+  memcpy(glst_temp->buff, node, glst_temp->node_size);
+  memcpy(glst_temp->buff, (dst->buff + clip_size), dst->cap_size - clip_size);
+  glst_destroy(dst);
+  dst = glst_temp;
+}
+void glst_deleteNode(glstv_t dst, int pos)
+{
+  uint len = glst_len(dst);
+  if (pos >= len || pos < 0) //这里的等号，表明下标是从0开始的
+  {
+    return;
+  }
+  uint clip_size = pos * dst->node_size;
+  glstv_t glst_temp = glst_new_bySize(dst->node_size, len - 1);
+  memcpy(glst_temp->buff, dst->buff, clip_size);
+  memcpy(glst_temp->buff, (dst->buff + clip_size + dst->node_size), dst->cap_size - clip_size - dst->node_size);
+  glst_destroy(dst);
+  dst = glst_temp;
+}
+void glst_appendNode(glstv_t dst, nodec_t node)
+{
+  realloc(dst->buff, dst->node_size);
+  memcpy(dst->buff + dst->cap_size, node, dst->node_size);
+}
+void glst_appendLst(glstv_t dst, glstc_t lst)
+{
+  if (dst->node_size == lst->node_size)
+  {
+    realloc(dst->buff, lst->cap_size);
+    memcpy(dst->buff + glst_len(dst), lst->buff, dst->cap_size);
+    dst->cap_size += lst->cap_size;
   }
   else
   {
     return;
   }
-}
-void gstr_insertSub(glstv_t d, glstc_t s, int pos)
-{
-  if (d->uint_size == s->uint_size)
-  {
-    byte *temp = (byte *)malloc(d->cap_size + s->cap_size);
-    memcpy(temp, d->buff, pos * d->uint_size);
-    memcpy(temp + pos, s->buff, s->cap_size);
-    memcpy(temp + pos + gstr_len(s), d->buff + pos, (gstr_len(d) - pos - 1) * d->uint_size);
-    realloc(d->buff, s->cap_size);
-    d->cap_size += s->cap_size;
-    free(d->buff);
-    d->buff = temp;
-  }
-  else
-  {
-    return;
-  }
-}
-void gstr_deleteSub(glstv_t d, int pos, int len)
-{
-  uint raw_len = gstr_len(d);
-  byte *temp = (byte *)malloc((raw_len - len) * d->uint_size);
-  memcpy(temp, d->buff, pos * d->uint_size);
-  memcpy(temp + pos, d->buff + pos + len - 1, (raw_len - len - pos) * d->uint_size);
-  d->cap_size -= len * d->uint_size;
-  free(d->buff);
-  d->buff = temp;
 }

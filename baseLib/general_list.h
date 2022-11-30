@@ -12,11 +12,12 @@ extern "C"
   typedef const struct _glst_ *glstc_t; // 常量指针
   typedef void *nodev_t;
   typedef const void *nodec_t;
-  // 构造/析构
-  glstv_t glst_new(size_t nodesize); // sizeof(nodetype)
+  // 从已知元素大小新建列表
+  glstv_t glst_new(size_t nodesize);
+  //从已知元素大小和数量新建列表
   glstv_t glst_new_bySize(size_t nodesize, size_t initsize);
   void glst_destroy(glstv_t lst);
-  // []
+  // 获取索引值
   void glst_getnode(glstc_t this, size_t pos, nodev_t buf);
   void glst_setnode(glstv_t this, size_t pos, nodec_t buf);
   // 读操作

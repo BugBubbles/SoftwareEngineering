@@ -1,6 +1,8 @@
 #include "shell_line.h"
+#include "malloc.h"
 typedef enum cmdtype
 {
+  _NONE, //默认无命令
   _LINE, //直线命令
   _CIRC, //圆周命令
   _RECT, //矩形命令
@@ -41,7 +43,19 @@ typedef union tag_paraval paraval_t;
 typedef struct tag_para para_t;
 typedef struct tag_std_cmdline std_cmdline_t;
 
-
-glst_t glst_new(size_t nodesize);
-
-glst_new(sizeof(para_t));
+//新建一个标准化命令行列表
+std_batcmd_t std_cmdline_list_new()
+{
+  //新建一个glist存放标准化命令行列表
+  glstv_t std_batcmd = glst_new(sizeof(std_cmdline_t));
+  //返回这个新建的表
+  return std_batcmd;
+}
+//删除一个标准化命令行列表
+void std_cmdline_list_del(std_batcmd_t std_batcmd)
+{
+}
+//向命令行列表中添加新的标准化命令
+void std_cmdline_list_apd(std_batcmd_t std_batcmd)
+{
+}
