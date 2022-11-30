@@ -29,6 +29,7 @@ typedef struct tag_poly
   point_t center;
   float radius;
 } poly_t;
+
 void read_point_data(pointc_t point, float *x_val, float *y_val)
 {
   *x_val = point->x_val;

@@ -1,6 +1,7 @@
 #include "my_geometry.h"
 #include <math.h>
 #include <malloc.h>
+#include<assert.h>
 /*
  * This function uses a ui_point, a length value
  * and a unit vector to form a line eqution and

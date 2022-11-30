@@ -6,10 +6,12 @@ extern "C"
 {
 #endif
 #include "general_list.h"
+
   struct std_cmdline_t;
   typedef const struct std_cmdline_t *std_cmdline_c_t;
   typedef struct std_cmdline_t *std_cmdline_v_t;
   typedef glstv_t std_batcmd_t;
+
   //新建一个标准化命令行列表
   std_batcmd_t std_cmdline_list_new();
   //删除一个标准化命令行列表

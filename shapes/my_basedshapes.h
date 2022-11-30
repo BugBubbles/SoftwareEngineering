@@ -22,6 +22,15 @@ extern "C"
   typedef struct tag_rect *rectv_t;
   typedef const struct tag_poly *polyc_t;
   typedef struct tag_poly *polyv_t;
+  //基本形状枚举种类
+  typedef enum tag_based_shape
+  {
+    _POINT,
+    _LINE,
+    _CIRCLE,
+    _RECTANGLE,
+    _POLYGON,
+  } based_shape_t;
   //创建点
   pointv_t new_point();
   //读取点命令序列的数据
