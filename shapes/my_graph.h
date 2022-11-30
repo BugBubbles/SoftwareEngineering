@@ -1,11 +1,11 @@
-
-#ifndef _COOR_MANAGE_
-#define _COOR_MANAGE_
+#ifndef _COOR_POINTS_
+#define _COOR_POINTS_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
   
 #ifdef __cplusplus
 }

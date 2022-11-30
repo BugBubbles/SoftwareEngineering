@@ -5,9 +5,9 @@
 #define NUM_POINTS 1000
 //从circ_1,到一个圆的点列表,
 //点列表由用户定义，假设已经有了
-void circ_point_list(p_circ_c circ, float *list_x, float *list_y)
+void circ_point_list(p_circc_t circ, float *list_x, float *list_y)
 {
-  p_point_v cnt = new_point();
+  p_poinv_t cnt = new_point();
   float rad;
   read_circ_data(circ, cnt, &rad);
   float cnt_x, cnt_y;
