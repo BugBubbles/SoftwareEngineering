@@ -26,9 +26,13 @@ extern "C"
   int gstr_findStr(gstrc_t s, const char *sub);
   // 写操作
   void gstr_assign(gstrv_t d, gstrc_t s);
-  void gstr_append(gstrv_t d, gstrc_t s);
+  void gstr_appendStr(gstrv_t d, gstrc_t s);
+  void gstr_appendChr(gstrv_t d, char c);
   void gstr_insertSub(gstrv_t d, gstrc_t s, int pos);
   void gstr_deleteSub(gstrv_t d, int pos, int len);
+  //单个字符存取
+  void gstr_setChr(gstrc_t s, char c, int pos);
+  char gstr_getChr(gstrc_t s, int pos);
   // // 语法操作
   // int gstr_skipChr(gstrc_t s, int pos, char c);
   // int gstr_skipSpChr(gstrc_t s, int pos);
