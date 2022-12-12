@@ -14,7 +14,7 @@ extern "C"
   // 从已知元素大小新建列表
   treev_t tree_new();
 
-  void tree_destroy(treev_t lst);
+  void tree_destroy(treev_t tree);
   // 获取索引值
   void tree_getnode(treec_t this, size_t pos, nodev_t buf);
   //

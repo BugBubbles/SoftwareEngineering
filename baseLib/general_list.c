@@ -4,22 +4,22 @@
 
 #define _DEFINE_POINT_
 typedef unsigned int size_t;
-//使用顺序表
+// 使用顺序表
 /*剩下两种选项是使用指针数组和使用链表*/
 typedef unsigned int uint;
 typedef char byte;
 typedef struct _glst_
 {
-  //每个子块实际占用空间
+  // 每个子块实际占用空间
   size_t node_size;
-  //数据部分总共占据的内存空间
+  // 数据部分总共占据的内存空间
   size_t cap_size;
-  //每个子块是一串连续的内存空间，可以直接存一个字符串
+  // 每个子块是一串连续的内存空间，可以直接存一个字符串
   byte *buff;
 } _glst_;
 
 glstv_t glst_new(size_t _size)
-{ //默认只创建一个元素那个大的线性表
+{ // 默认只创建一个元素那个大的线性表
   glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
   temp->cap_size = _size;
   temp->node_size = _size;
@@ -42,6 +42,10 @@ void glst_destroy(glstv_t lst)
 }
 int glst_len(glstc_t s)
 {
+  if (s == NULL)
+  {
+    return 0;
+  }
   return (s->cap_size / s->node_size);
 }
 void glst_getnode(glstc_t this, size_t pos, nodev_t buf)
@@ -96,7 +100,7 @@ void glst_insertNode(glstv_t dst, nodec_t node, int pos)
 void glst_deleteNode(glstv_t dst, int pos)
 {
   uint len = glst_len(dst);
-  if (pos >= len || pos < 0) //这里的等号，表明下标是从0开始的
+  if (pos >= len || pos < 0) // 这里的等号，表明下标是从0开始的
   {
     return;
   }

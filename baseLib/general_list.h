@@ -1,6 +1,7 @@
 #ifndef _GLIST_
 #define _GLIST_
-
+#ifndef NULL
+#define NULL (void*)0
 #ifdef __cplusplus
 extern "C"
 {
