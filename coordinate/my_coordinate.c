@@ -2,16 +2,16 @@
 #include "malloc.h"
 #include "assert.h"
 #include <stdlib.h>
-typedef struct tag_coordinate //某一坐标系
+typedef struct tag_coordinate // 某一坐标系
 {
-  int is_top;                       //是不是最顶层的坐标系，是为1，否为0
-  float base_point_x, base_point_y; //坐标原点在父坐标系下的位置
-  float min_x, max_x, min_y, max_y; //坐标系刻度，即坐标系的最大最小取值
-  struct tag_coordinate *parent_coor;   //父坐标系指针
+  int is_top;                         // 是不是最顶层的坐标系，是为1，否为0
+  float base_point_x, base_point_y;   // 坐标原点在父坐标系下的位置
+  float min_x, max_x, min_y, max_y;   // 坐标系刻度，即坐标系的最大最小取值
+  struct tag_coordinate *parent_coor; // 父坐标系指针
   // float rotate_angle;               //坐标x轴相对于父坐标系逆时针转动的角度
 } coordinate_t;
 
-typedef struct tag_ui_coordinate //用户界面坐标系
+typedef struct tag_ui_coordinate // 用户界面坐标系
 {
   int scale_x, scale_y;
 } ui_coordinate_t;
@@ -44,11 +44,19 @@ coordinatev_t new_sub_coor(float base_point_x, float base_point_y,
 }
 point_t relati_point_to_absol_point(coordinatec_t relati_coor, point_t relati_point)
 {
-  float relati_base_point_x=relati_coor->base_point_x;
-  float relati_base_point_y=relati_coor->base_point_y;
+  float relati_base_point_x = relati_coor->base_point_x;
+  float relati_base_point_y = relati_coor->base_point_y;
   coordinatec_t parent_coor = relati_coor->parent_coor;
-  
 }
-void destory_coor(coordinatev_t coor){
-  
+ui_point_t math_point_to_ui_point(coordinatec_t math_coor, point_t math_point, ui_coordinate_t ui_coordinate)
+{
+  ui_point_t ui_point;
+  ui_point.x_val = ui_coordinate.scale_x / (math_coor->ma_x - math_coor->min_x) * math_point.x_val;
+  ui_point.y_val = ui_coordinate.scale_y / (math_coor->ma_y - math_coor->min_y) * math_point.y_val;
+  return ui_point;
+}
+void destory_coor(coordinatev_t coor)
+{
+  coor->parent_coor = NULL;
+  free(coor);
 }

@@ -1,4 +1,3 @@
-
 #include "general_list.h"
 #include "string.h"
 #include <stdlib.h>
