@@ -49,3 +49,6 @@ point_t relati_point_to_absol_point(coordinatec_t relati_coor, point_t relati_po
   coordinatec_t parent_coor = relati_coor->parent_coor;
   
 }
+void destory_coor(coordinatev_t coor){
+  
+}

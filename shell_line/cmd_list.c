@@ -1,31 +1,9 @@
 #include "cmd_list.h"
 #include "malloc.h"
 #include"my_basedshapes.h"
-#include"cmd_line.h"
 
-struct tag_std_cmdline
-{
-  cmdtype_t cmdtype;
-  glstv_t paralist;
-};
-struct tag_para
-{
-  paratype_t paratype;
-  paraval_t paraval;
-};
-union tag_paraval
-{
-  point_t point;
-  point_t center;
-  vector_t vector;
-  float radius;
-  float diameter;
-  float length;
-  float angle;
-};
-typedef union tag_paraval paraval_t;
-typedef struct tag_para para_t;
-typedef struct tag_std_cmdline std_cmdline_t;
+
+
 
 //新建一个标准化命令行列表
 std_cmdlist_t std_cmdline_list_new()

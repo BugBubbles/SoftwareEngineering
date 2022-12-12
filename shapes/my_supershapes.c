@@ -28,10 +28,12 @@ typedef union tag_supershapebody
 {
   simpleshape_t simple;
   shapegroup_t group;
+
 } supershapebody_t;
 
 typedef struct tag_supershape
 {
   supershapetype_t supershapetype;
   supershapebody_t supershapebody;
+    handle_t handle;
 } tag_supershape;
