@@ -1,7 +1,8 @@
 #ifndef _GLIST_
 #define _GLIST_
 #ifndef NULL
-#define NULL (void*)0
+#define NULL ((void *)0)
+#endif
 #ifdef __cplusplus
 extern "C"
 {
@@ -15,7 +16,7 @@ extern "C"
   typedef const void *nodec_t;
   // 从已知元素大小新建列表
   glstv_t glst_new(size_t nodesize);
-  //从已知元素大小和数量新建列表
+  // 从已知元素大小和数量新建列表
   glstv_t glst_new_bySize(size_t nodesize, size_t initsize);
   void glst_destroy(glstv_t lst);
   // 获取索引值

@@ -1,7 +1,9 @@
 /*by李翔，通用线性表*/
 #ifndef _GENERAL_STR_
 #define _GENERAL_STR_
-
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
 #ifdef __cplusplus
 extern "C"
 {

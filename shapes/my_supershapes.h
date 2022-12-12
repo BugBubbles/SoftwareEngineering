@@ -8,8 +8,8 @@ extern "C"
 #include "my_basedshapes.h"
 #include "general_list.h"
 #include "handle.h"
-  struct tag_supershape;
-  typedef struct tag_supershape *supershape_t;
+  struct _supershape_;
+  typedef struct _supershape_ *supershape_t;
 
   //新建一个超形状，有多少个simpleshapebody_t形状就有多少个new函数
   supershape_t shape_new_point(handle_t handle);
