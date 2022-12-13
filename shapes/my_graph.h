@@ -5,13 +5,11 @@
 extern "C"
 {
 #endif
-#include "my_basedshapes.h"
-#include "general_list.h"
 #include "my_supershapes.h"
 #include "handle.h"
-  struct tag_graph;
-  typedef struct tag_graph *graph_t;
-  //新建一个图版
+  struct _graph_;
+  typedef struct _graph_ *graph_t;
+  //新建一个空的图版
   graph_t graph_new();
   //生成handle，取graph的超形状序列最大handle值+1
   handle_t graph_new_handle(graph_t graph);

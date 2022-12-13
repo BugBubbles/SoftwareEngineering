@@ -1,5 +1,4 @@
 #include "general_list.h"
-#include "my_basedshapes.h"
 #include "my_supershapes.h"
 #include "malloc.h"
 typedef union tag_simpleshapebody
@@ -317,7 +316,8 @@ rect_t shape_get_rectangle(supershape_t supershape)
 /*group基本取值操作*/
 int shape_get_group_num(supershape_t shapegroup)
 {
-  
+  glstv_t temp_list = shapegroup->supershapebody.group;
+  return glst_len(temp_list);
 }
 
 supershape_t shape_get_group_item(supershape_t shapegroup, int pos)
@@ -328,7 +328,7 @@ supershape_t shape_get_group_item(supershape_t shapegroup, int pos)
   return supershape;
 }
 /*删除一个超形状*/
-void graph_destroy(supershape_t supershape)
+void supershape_destroy(supershape_t supershape)
 {
   free(supershape);
   supershape = NULL;

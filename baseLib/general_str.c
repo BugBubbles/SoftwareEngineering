@@ -1,27 +1,26 @@
-
 #include "general_str.h"
 #include "string.h"
-#include <stdlib.h>
+#include "malloc.h"
 
 #define _DEFINE_POINT_
-typedef unsigned int size_t;
-//使用顺序表
+// 使用顺序表
 /*剩下两种选项是使用指针数组和使用链表*/
 typedef unsigned int uint;
 typedef char byte;
 typedef struct _gstr_
 {
-  size_t uint_size; //每个子块实际占用空间
-  size_t cap_size;  //数据部分总共占据的内存空间
-  byte *buff;       //每个子块是一串连续的内存空间，可以直接存一个字符串
+  size_t uint_size; // 每个子块实际占用空间
+  size_t cap_size;  // 数据部分总共占据的内存空间
+  byte *buff;       // 每个子块是一串连续的内存空间，可以直接存一个字符串
 } _gstr_;
 
-gstrv_t gstr_new(size_t _size)
-{ //默认只创建一个元素那个大的线性表
+gstrv_t gstr_new(_size_t nodesize)
+{
+  // 默认只创建一个元素那个大的线性表
   gstrv_t temp = (gstrv_t)malloc(sizeof(_gstr_));
-  temp->cap_size = _size;
-  temp->uint_size = _size;
-  temp->buff = (byte *)malloc(_size * sizeof(byte));
+  temp->cap_size = nodesize;
+  temp->uint_size = nodesize;
+  temp->buff = (byte *)malloc(nodesize * sizeof(byte));
   return temp;
 }
 gstrv_t gstr_new_byCStr(const char *s)
@@ -39,12 +38,13 @@ gstrv_t gstr_new_byCStr(const char *s)
   memcpy(temp->buff, p, temp->cap_size);
   return temp;
 }
-gstrv_t gstr_new_bySize(size_t _size, int size)
+gstrv_t gstr_new_bySize(_size_t nodesize, int size)
 {
   gstrv_t temp = (gstrv_t)malloc(sizeof(_gstr_));
-  temp->cap_size = _size * size;
-  temp->uint_size = _size;
-  temp->buff = (byte *)malloc(_size * size * sizeof(byte));
+  temp->cap_size = nodesize * size;
+  temp->uint_size = nodesize;
+  temp->buff = (byte *)malloc(nodesize * size * sizeof(byte));
+  return temp;
 }
 void gstr_destroy(gstrv_t s)
 {
@@ -71,11 +71,23 @@ void gstr_export(gstrc_t this, char *dst)
 {
   memcpy(dst, this->buff, this->cap_size);
 }
+void gstr_import_byInt(gstrv_t this, int src)
+{
+  char *char_int = (char *)malloc(sizeof(char));
+  int i = src / 10 + 1;
+  while (i--)
+  {
+    *(char_int + i) = '0' + src % 10;
+    src /= 10;
+  }
+  gstr_import(this, char_int);
+  free(char_int);
+}
 int gstr_len(gstrc_t s)
 {
   return (s->cap_size / s->uint_size);
 }
-//仅比较字典序
+// 仅比较字典序
 #define _NOT_COMPARABLE_ -2
 int gstr_cmp(gstrc_t a, gstrc_t b)
 {
@@ -100,7 +112,7 @@ int gstr_findChr(gstrc_t s, char c)
     {
       if (*(p + i) == c)
       {
-        return i; //有的，返回序列值
+        return i; // 有的，返回序列值
       }
       else
       {
@@ -108,7 +120,7 @@ int gstr_findChr(gstrc_t s, char c)
       }
     }
   }
-  return NO_FIND; //未查到，返回-1;
+  return NO_FIND; // 未查到，返回-1;
 }
 void gstr_append(gstrv_t d, gstrc_t s)
 {

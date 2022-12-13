@@ -6,7 +6,6 @@ extern "C"
 {
 #endif
 #include "my_basedshapes.h"
-#include "general_list.h"
 #include "handle.h"
   struct _supershape_;
   typedef struct _supershape_ *supershape_t;
@@ -41,7 +40,7 @@ extern "C"
   supershape_t shape_get_group_item(supershape_t shapegroup, int pos);
 
   //删除一个超形状
-  void graph_destroy(supershape_t supershape);
+  void supershape_destroy(supershape_t supershape);
 
 #ifdef __cplusplus
 }
