@@ -9,6 +9,12 @@ extern "C"
 #include "my_coordinate.h"
   struct _coor_manager_;
   typedef struct _coor_manager_ *coor_manager_t;
+  //为某一个坐标系注册至管理器中
+  coor_manager_t new_register();
+  //获取当前坐标系顶层的父坐标系
+  coordinatev_t get_above_coor(coordinatev_t coor);
+  //获取当前坐标系底层的子坐标系
+  glstv_t get_below_coor(coordinatev_t coor);
   void new_coor_manager(coordinatec_t top_coor);                     // 坐标系的管理器，内部有一个全局静态变量，设计hash结构表，方便删除。
   coordinatev_t get_top();                                           // 返回绝对坐标系
   void store_sub_coor(coordinatec_t above_coor, coordinatec_t coor); // 在新建坐标系时存入管理器

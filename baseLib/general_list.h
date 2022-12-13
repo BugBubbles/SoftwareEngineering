@@ -7,7 +7,7 @@
 extern "C"
 {
 #endif
-  typedef unsigned int size_t;
+#include "handle.h"
   // 接口数据类型
   struct _glst_;                        // 不完全类型，无法直接定义变量
   typedef struct _glst_ *glstv_t;       // 变量指针
@@ -15,13 +15,13 @@ extern "C"
   typedef void *nodev_t;
   typedef const void *nodec_t;
   // 从已知元素大小新建列表
-  glstv_t glst_new(size_t nodesize);
+  glstv_t glst_new(_size_t nodesize);
   // 从已知元素大小和数量新建列表
-  glstv_t glst_new_bySize(size_t nodesize, size_t initsize);
+  glstv_t glst_new_bySize(_size_t nodesize, _size_t initsize);
   void glst_destroy(glstv_t lst);
   // 获取索引值
-  void glst_getnode(glstc_t this, size_t pos, nodev_t buf);
-  void glst_setnode(glstv_t this, size_t pos, nodec_t buf);
+  void glst_getnode(glstc_t this, _size_t pos, nodev_t buf);
+  void glst_setnode(glstv_t this, _size_t pos, nodec_t buf);
   // 读操作
   int glst_len(glstc_t lst);
   int glst_findNode(glstc_t lst, nodec_t node);

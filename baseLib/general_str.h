@@ -8,7 +8,7 @@
 extern "C"
 {
 #endif
-  typedef unsigned int _size_t;
+#include "handle.h"
   // 接口数据类型
   struct _gstr_;                        // 不完全类型，无法直接定义变量
   typedef struct _gstr_ *gstrv_t;       // 变量指针

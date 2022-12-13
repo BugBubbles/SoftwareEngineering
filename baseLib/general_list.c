@@ -1,9 +1,7 @@
 #include "general_list.h"
 #include "string.h"
 #include <stdlib.h>
-
 #define _DEFINE_POINT_
-typedef unsigned int size_t;
 // 使用顺序表
 /*剩下两种选项是使用指针数组和使用链表*/
 typedef unsigned int uint;
@@ -11,14 +9,14 @@ typedef char byte;
 typedef struct _glst_
 {
   // 每个子块实际占用空间
-  size_t node_size;
+  _size_t node_size;
   // 数据部分总共占据的内存空间
-  size_t cap_size;
+  _size_t cap_size;
   // 每个子块是一串连续的内存空间，可以直接存一个字符串
   byte *buff;
 } _glst_;
 
-glstv_t glst_new(size_t _size)
+glstv_t glst_new(_size_t _size)
 { // 默认只创建一个元素那个大的线性表
   glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
   temp->cap_size = _size;
@@ -26,7 +24,7 @@ glstv_t glst_new(size_t _size)
   temp->buff = (byte *)malloc(_size * sizeof(byte));
   return temp;
 }
-glstv_t glst_new_bySize(size_t nodesize, size_t initsize)
+glstv_t glst_new_bySize(_size_t nodesize, _size_t initsize)
 {
   glstv_t temp = (glstv_t)malloc(sizeof(_glst_));
   temp->cap_size = nodesize * initsize;
@@ -48,11 +46,11 @@ int glst_len(glstc_t s)
   }
   return (s->cap_size / s->node_size);
 }
-void glst_getnode(glstc_t this, size_t pos, nodev_t buf)
+void glst_getnode(glstc_t this, _size_t pos, nodev_t buf)
 {
   memcpy(buf, pos * (this->node_size), this->buff);
 }
-void glst_setnode(glstv_t this, size_t pos, nodec_t buf)
+void glst_setnode(glstv_t this, _size_t pos, nodec_t buf)
 {
   memcpy(this->buff, pos * (this->node_size), buf);
 }

@@ -5,8 +5,8 @@
 extern "C"
 {
 #endif
-typedef unsigned int handle_t;
-
+  typedef unsigned long long handle_t;
+  typedef unsigned int _size_t;
 #ifdef __cplusplus
 }
 #endif

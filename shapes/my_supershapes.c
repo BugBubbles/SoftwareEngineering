@@ -36,7 +36,14 @@ typedef struct _supershape_
   supershapebody_t supershapebody;
 
 } _supershape_;
-
+int size_supershape()
+{
+  return sizeof(_supershape_);
+}
+handle_t get_shape_handle(supershape_t supershape)
+{
+  return supershape->handle;
+}
 supershape_t shape_new_point(handle_t handle)
 {
   // 新建申请内存
