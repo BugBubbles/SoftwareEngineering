@@ -33,6 +33,7 @@ coordinatev_t new_sub_coor(float base_point_x, float base_point_y, float min_x, 
   sub_coor->max_x = max_x;
   sub_coor->min_y = min_y;
   sub_coor->max_y = max_y;
+  return sub_coor;//暂时不用可以改成NULL
 }
 point_t get_coor_basepnt(coordinatev_t coor)
 {

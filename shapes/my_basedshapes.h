@@ -7,8 +7,9 @@ extern "C"
 {
 #endif
 #include "based_geometry.h"
-  //缺数学空间下各类型的定义
-  //缺一个函数，算各种类型的内存空间大小
+#include "general_list.h"
+  // 缺数学空间下各类型的定义
+  // 缺一个函数，算各种类型的内存空间大小
   typedef enum tag_simpleshapetype
   {
     _POINT,
@@ -35,11 +36,11 @@ extern "C"
   } rect_t;
   typedef struct tag_poly
   {
-    int num_apex; //顶点数量
-    point_t point_list[1];
+    int num_apex; // 顶点数量
+    glstv_t point_list;
   } poly_t;
-  //求简单形状的字节数，非多边形的情况不用填入第二个参数
-  int size_of_shape(simpleshapetype_t based_shape,int num_apex);
+  // 求简单形状的字节数，非多边形的情况不用填入第二个参数
+  int size_of_shape(simpleshapetype_t based_shape);
 #ifdef _c_tplusplus
 }
 #endif

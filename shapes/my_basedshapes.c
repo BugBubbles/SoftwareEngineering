@@ -1,5 +1,5 @@
 #include "my_basedshapes.h"
-int size_of_shape(simpleshapetype_t based_shape, int num_apex)
+int size_of_shape(simpleshapetype_t based_shape)
 {
   switch (based_shape)
   {
@@ -12,7 +12,7 @@ int size_of_shape(simpleshapetype_t based_shape, int num_apex)
   case _RECTANGLE:
     return sizeof(rect_t);
   case _POLYGON:
-    return sizeof(num_apex) + num_apex * sizeof(point_t);
+    return sizeof(int)+sizeof(glstv_t);
   default:
     return 0;
   }
