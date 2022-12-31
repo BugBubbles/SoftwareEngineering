@@ -46,11 +46,11 @@ int glst_len(glstc_t s)
   }
   return (s->cap_size / s->node_size);
 }
-void glst_getnode(glstc_t this, _size_t pos, nodev_t buf)
+void glst_getnode(glstc_t this, int pos, nodev_t buf)
 {
   memcpy(buf, pos * (this->node_size), this->buff);
 }
-void glst_setnode(glstv_t this, _size_t pos, nodec_t buf)
+void glst_setnode(glstv_t this, int pos, nodec_t buf)
 {
   memcpy(this->buff, pos * (this->node_size), buf);
 }

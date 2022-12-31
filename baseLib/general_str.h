@@ -4,6 +4,10 @@
 #ifndef NULL
 #define NULL ((void *)0)
 #endif
+#ifndef _SIZE_T
+#define _SIZE_T
+typedef unsigned long long int _size_t;
+#endif
 #ifdef __cplusplus
 extern "C"
 {
@@ -16,7 +20,7 @@ extern "C"
   // 构造/析构
   gstrv_t gstr_new(_size_t nodesize);
   gstrv_t gstr_new_byCStr(const char *s);
-  gstrv_t gstr_new_bySize(_size_t nodesize, int size);
+  gstrv_t gstr_new_bySize(_size_t nodesize, _size_t size);
   void gstr_destroy(gstrv_t s);
   // 导入/导出
   void gstr_import(gstrv_t this, const char *src);
@@ -36,14 +40,17 @@ extern "C"
   // 单个字符存取
   void gstr_setChr(gstrc_t s, char c, int pos);
   char gstr_getChr(gstrc_t s, int pos);
-  // // 语法操作
-  // int gstr_skipChr(gstrc_t s, int pos, char c);
-  // int gstr_skipSpChr(gstrc_t s, int pos);
-  // int gstr_findStrFrom(gstrc_t s, int pos, const char *sub);
-  // int gstr_skipSpFindChr(gstrc_t s, int pos, char c);
-  // int gstr_skipSpFindStr(gstrc_t s, int pos, const char *sub);
-  // int gstr_replaceOne(gstrv_t d, gstrc_t from, gstrc_t to, int pos);
-  // int gstr_replaceAll(gstrv_t d, gstrc_t from, gstrc_t to);
+  // 字符串存取
+  void gstr_setSub(gstrc_t s, const char *sub, int pos);
+  void gstr_getSub(gstrc_t s, char *sub, int pos, _size_t size);
+  // 语法操作
+  int gstr_skipChr(gstrc_t s, int pos, char c);
+  int gstr_skipSpChr(gstrc_t s, int pos);
+  int gstr_findStrFrom(gstrc_t s, int pos, const char *sub);
+  int gstr_skipSpFindChr(gstrc_t s, int pos, char c);
+  int gstr_skipSpFindStr(gstrc_t s, int pos, const char *sub);
+  int gstr_replaceOne(gstrv_t d, gstrc_t from, gstrc_t to, int pos);
+  int gstr_replaceAll(gstrv_t d, gstrc_t from, gstrc_t to);
 #ifdef __cplusplus
 }
 #endif

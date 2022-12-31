@@ -3,6 +3,10 @@
 #ifndef NULL
 #define NULL ((void *)0)
 #endif
+#ifndef _SIZE_T
+#define _SIZE_T
+typedef unsigned long long int _size_t;
+#endif
 #ifdef __cplusplus
 extern "C"
 {
@@ -20,8 +24,8 @@ extern "C"
   glstv_t glst_new_bySize(_size_t nodesize, _size_t initsize);
   void glst_destroy(glstv_t lst);
   // 获取索引值
-  void glst_getnode(glstc_t this, _size_t pos, nodev_t buf);
-  void glst_setnode(glstv_t this, _size_t pos, nodec_t buf);
+  void glst_getnode(glstc_t this, int pos, nodev_t buf);
+  void glst_setnode(glstv_t this, int pos, nodec_t buf);
   // 读操作
   int glst_len(glstc_t lst);
   int glst_findNode(glstc_t lst, nodec_t node);

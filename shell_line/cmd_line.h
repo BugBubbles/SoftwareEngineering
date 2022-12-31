@@ -5,7 +5,6 @@
 extern "C"
 {
 #endif
-#include "general_list.h"
 #include "transform.h"
 #include "handle.h"
   typedef enum tag_cmdtype
@@ -20,6 +19,7 @@ extern "C"
   // 不包含各个形状句柄的参数
   typedef enum tag_paratype
   {
+    _ERROR,    // 参数报错
     _HANDLE,   // 句柄参数属性
     _CENTER,   // 圆心参数属性
     _POINT,    // 点参数属性
@@ -30,9 +30,9 @@ extern "C"
     _VECTOR,   // 向量参数属性
   } paratype_t;
 
-  struct std_cmdline_t;
-  typedef const struct std_cmdline_t *std_cmdlinec_t;
-  typedef struct std_cmdline_t *std_cmdlinev_t;
+  struct _std_cmdline_;
+  typedef const struct _std_cmdline_ *std_cmdlinec_t;
+  typedef struct _std_cmdline_ *std_cmdlinev_t;
 
   // 新建一个新建、组合、删除、修改型标准化命令，如果新建和修改应该调用std_cmdline_add_para，组合和删除应该调用std_cmdline_add_handle
   std_cmdlinev_t std_cmdline_new(cmdtype_t cmdtype, int paranum);
@@ -45,7 +45,8 @@ extern "C"
 
   // 向组合、删除型命令里面添加、设置参数
   void std_cmdline_add_handle(std_cmdlinev_t std_cmdline, handle_t handle_id);
-
+  // 返回命令的字节数
+  int std_cmdline_size();
 #ifdef __cplusplus
 }
 #endif
