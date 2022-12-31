@@ -44,13 +44,24 @@ extern "C"
   void gstr_setSub(gstrc_t s, const char *sub, int pos);
   void gstr_getSub(gstrc_t s, char *sub, int pos, _size_t size);
   // 语法操作
+  //返回自pos位置以后的字符c的最近一个位置
   int gstr_skipChr(gstrc_t s, int pos, char c);
+  //返回自pos位置以后，pos位置的字符下一个位置
   int gstr_skipSpChr(gstrc_t s, int pos);
+  // 从gstr里面查找自pos位置以后的子串sub
   int gstr_findStrFrom(gstrc_t s, int pos, const char *sub);
+  // 从gstr里面查找自pos位置以后的字符c
   int gstr_skipSpFindChr(gstrc_t s, int pos, char c);
+  // 从gstr里面查找自pos位置以后的子串sub
   int gstr_skipSpFindStr(gstrc_t s, int pos, const char *sub);
-  int gstr_replaceOne(gstrv_t d, gstrc_t from, gstrc_t to, int pos);
-  int gstr_replaceAll(gstrv_t d, gstrc_t from, gstrc_t to);
+  // 从gstr里面查找并替换自pos位置以后的第一个字符c
+  int gstr_replaceOneSub(gstrv_t dst, gstrc_t src, char c, int pos);
+  // 从gstr里面查找并替换全部字符c
+  int gstr_replaceAllSub(gstrv_t dst, gstrc_t src, char c);
+  // 从gstr里面查找并替换自pos位置以后的第一个子gstr
+  int gstr_replaceOneSub(gstrv_t dst, gstrc_t src, gstrc_t part, int pos);
+  // 从gstr里面查找并替换全部子gstr
+  int gstr_replaceAllSub(gstrv_t dst, gstrc_t src, gstrc_t part);
 #ifdef __cplusplus
 }
 #endif
