@@ -2,6 +2,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <assert.h>
+#include "my_ctype.h"
 #ifndef UINT
 #define UINT
 typedef unsigned int uint;
@@ -210,7 +211,7 @@ void gstr_setSub(gstrc_t s, gstrc_t sub, int pos)
     memcpy(p + pos, sub->buff, sub->cap_size);
   }
 }
-void gstr_getSub(gstrc_t s, gstrc_t sub, int pos, _size_t size)
+void gstr_getSub_bySize(gstrc_t s, gstrc_t sub, int pos, _size_t size)
 {
   char *p = s->buff;
   uint len = gstr_len(s);
@@ -221,6 +222,19 @@ void gstr_getSub(gstrc_t s, gstrc_t sub, int pos, _size_t size)
   else
   {
     memcpy(p + pos, sub->buff, sub->cap_size);
+  }
+}
+void gstr_getSub_byPos(gstrc_t s, gstrc_t sub, int begin, int end)
+{
+  char *p = s->buff;
+  uint len = gstr_len(s);
+  if (begin < 0 || end > len || begin > end)
+  {
+    return;
+  }
+  else
+  {
+    memcpy(p + begin, sub->buff, (end - begin + 1) * sizeof(char));
   }
 }
 int gstr_skipChr(gstrc_t s, int pos, char c)
@@ -364,6 +378,11 @@ int gstr_replaceOneChr(gstrv_t dst, char raw_c, char new_c, int pos)
     while ((i = gstr_skipSpFindChr(dst, i, raw_c)) != NO_FIND)
     {
       *(src_p + i) = new_c;
+      i++;
+      if (i == len)
+      {
+        break;
+      }
     }
     return 0;
   }
@@ -371,10 +390,15 @@ int gstr_replaceOneChr(gstrv_t dst, char raw_c, char new_c, int pos)
 int gstr_replaceAllChr(gstrv_t dst, char raw_c, char new_c)
 {
   char *src_p = dst->buff;
-  uint i = 0;
+  uint i = 0, len = gstr_len(dst);
   while ((i = gstr_skipSpFindChr(dst, i, raw_c)) != NO_FIND)
   {
     *(src_p + i) = new_c;
+    i++;
+    if (i == len)
+    {
+      break;
+    }
   }
   return 0;
 }
@@ -393,6 +417,11 @@ int gstr_replaceOneSub(gstrv_t dst, gstrc_t raw_sub, gstrc_t new_sub, int pos)
     while ((i = gstr_findStrFrom(dst, i, raw_sub->buff)) != NO_FIND)
     {
       memcpy(src_p + i, new_sub, sub_len);
+      i++;
+      if (i == len)
+      {
+        break;
+      }
     }
     return 0;
   }
@@ -400,11 +429,16 @@ int gstr_replaceOneSub(gstrv_t dst, gstrc_t raw_sub, gstrc_t new_sub, int pos)
 int gstr_replaceAllSub(gstrv_t dst, gstrc_t raw_sub, gstrc_t new_sub)
 {
   char *src_p = dst->buff;
-  uint i = 0;
+  uint i = 0, len = gstr_len(dst);
   uint sub_len = raw_sub->cap_size;
   while ((i = gstr_findStrFrom(dst, i, raw_sub->buff)) != NO_FIND)
   {
     memcpy(src_p + i, new_sub, sub_len);
+    i++;
+    if (i == len)
+    {
+      break;
+    }
   }
   return 0;
 }
@@ -423,6 +457,11 @@ int gstr_removeSpPos(gstrv_t dst, int pos)
     while (*(src_p + i) != ' ')
     {
       gstr_appendChr(dst, *(src_p + i));
+      i++;
+      if (i == len)
+      {
+        break;
+      }
     }
     gstr_destroy(dst);
     dst = temp;
@@ -431,14 +470,78 @@ int gstr_removeSpPos(gstrv_t dst, int pos)
 }
 int gstr_removeSp(gstrv_t dst)
 {
+
   char *src_p = dst->buff;
-  uint i = 0;
+  if (src_p == NULL)
+  {
+    return 1;
+  }
+  uint i = 0, len = gstr_len(dst);
   gstrv_t temp = gstr_new();
   while (*(src_p + i) != ' ')
   {
     gstr_appendChr(temp, *(src_p + i));
+    i++;
+    if (i == len)
+    {
+      break;
+    }
   }
   gstr_destroy(dst);
   dst = temp;
   return 0;
+}
+int gstr_strToNum(float *dst, gstrv_t src)
+{
+  int iter = 0, punkt_flag = -1, minus_flag = 0;
+  char *p = src->buff;
+  float int_val = 0, float_val = 0;
+  if (*p == '-')
+  {
+    minus_flag = -1; // 负数符号置1；
+    iter++;
+  }
+  while (iter < src->cap_size)
+  {
+    char temp = *(p + iter);
+    if (temp == '.' && punkt_flag == -1)
+    {
+      // 标记出现小数点，同时记下当前iter位置
+      punkt_flag = iter;
+    }
+    else if (temp == '.' && punkt_flag != -1)
+    {
+      return 1;
+      // 报错，出现了两个小数点
+    }
+    else
+    {
+      // 首先检查是否出现0123456789和.以外的数字，不得含有其他类型的符号，否则将报错
+      if (char_to_num(temp) != -1)
+      {
+        if (punkt_flag == 0)
+        {
+          int_val = char_to_num(temp) + int_val * 10;
+        }
+        else
+        {
+          // 把小数部分当作整数，最后再除以一个数位那么多个10就可以了
+          float_val = char_to_num(temp) + float_val * 10;
+        }
+      }
+      else
+      {
+        return 2;
+        // 报错，出现了非数字和.的符号
+      }
+    }
+    iter++;
+  }
+  while (punkt_flag != iter) // 此时的iter正等于栈顶
+  {
+    float_val /= 10;
+    punkt_flag++;
+  }
+  *dst = minus_flag * (int_val + float_val);
+  return 0; // 正常输出结果返回0
 }

@@ -72,13 +72,24 @@ char lower_2_upper(char c)
 
 short is_common_ab(char c)
 {
-  if (c == ',' || c == ':' || c == '(' || c == ')' || c == '.' || c == '-' || c == '\'' || c == ' ' || c == '\t'||c=='+')
+  if (c == ',' || c == ':' || c == '(' || c == ')' || c == '.' || c == '-' || c == '\'' || c == ' ' || c == '\t' || c == '+')
   {
     return 1;
   }
   else
   {
     return 0;
+  }
+}
+short char_to_num(char c)
+{
+  if (is_number(c))
+  {
+    return c - '0';
+  }
+  else
+  {
+    return -1;
   }
 }
 short is_valid_char(char c)

@@ -1,6 +1,6 @@
 /*by牛泽坤，字符处理函数库*/
 #ifndef _my_ctype_new_H_INCLUDE_
-#define  _my_ctype_new_H_INCLUDE_
+#define _my_ctype_new_H_INCLUDE_
 
 /*
 IsNumber用于判断字符是否为数字字符
@@ -62,9 +62,11 @@ input：字符c
 output：当输入是合法字母字符时返回对应小写，否则返回'\0'
 */
 
-char lower_2_lpper(char c);
-//检查是否为命令合法字符
+char lower_2_upper(char c);
+// 将数字由char类型转化为short类型
+short char_to_num(char c);
+// 检查是否为命令合法字符
 short is_valid_char(char c);
-//检查是否为常见符号,.:()
+// 检查是否为常见符号,.:()
 short is_common_ab(char c);
 #endif

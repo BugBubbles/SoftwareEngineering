@@ -29,6 +29,7 @@ extern "C"
   // 读操作
   int gstr_len(gstrc_t s);
   int gstr_cmp(gstrc_t a, gstrc_t b);
+  // 返回第一个符合条件的位置
   int gstr_findChr(gstrc_t s, char c);
   int gstr_findStr(gstrc_t s, gstrc_t sub);
   // 写操作
@@ -42,7 +43,8 @@ extern "C"
   char gstr_getChr(gstrc_t s, int pos);
   // 字符串存取
   void gstr_setSub(gstrc_t s, gstrc_t sub, int pos);
-  void gstr_getSub(gstrc_t s, gstrc_t sub, int pos, _size_t size);
+  void gstr_getSub_bySize(gstrc_t s, gstrc_t sub, int pos, _size_t size);
+  void gstr_getSub_byPos(gstrc_t s, gstrc_t sub, int begin, int end);
   // 语法操作
   // 返回自pos位置以后的不是字符c的最近一个位置
   int gstr_skipChr(gstrc_t s, int pos, char c);
@@ -63,9 +65,11 @@ extern "C"
   // 从gstr里面查找并替换全部子gstr
   int gstr_replaceAllSub(gstrv_t dst, gstrc_t raw_sub, gstrc_t new_sub);
   // 从gstr里面查找并替换自pos以后的全部空格
-  int gstr_removeSpPos(gstrv_t dst,int pos);
+  int gstr_removeSpPos(gstrv_t dst, int pos);
   // 从gstr里面查找并替换全部空格
   int gstr_removeSp(gstrv_t dst);
+  // 将gstr转化为浮点数字，默认顺序为大端存储，即低地址存放的是高位数字
+  int gstr_strToNum(float *dst, gstrv_t src);
 #ifdef __cplusplus
 }
 #endif
