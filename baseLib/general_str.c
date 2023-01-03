@@ -88,7 +88,18 @@ int gstr_len(gstrc_t s)
 // 仅比较字典序
 int gstr_cmp(gstrc_t a, gstrc_t b)
 {
-  return memcmp(a->buff, b->buff, a->cap_size);
+  if (a->cap_size < b->cap_size)
+  {
+    return memcmp(a->buff, b->buff, a->cap_size);
+  }
+  else
+  {
+    return memcmp(a->buff, b->buff, b->cap_size);
+  }
+}
+int gstr_cmp_byStr(gstrc_t a, const char *b)
+{
+  return memcmp(a->buff, b, a->cap_size);
 }
 #define NO_FIND -1
 int gstr_findChr(gstrc_t s, char c)
@@ -227,13 +238,17 @@ void gstr_getSub_bySize(gstrc_t s, gstrc_t sub, int pos, _size_t size)
 void gstr_getSub_byPos(gstrc_t s, gstrc_t sub, int begin, int end)
 {
   char *p = s->buff;
-  uint len = gstr_len(s);
-  if (begin < 0 || end > len || begin > end)
+  uint len_s = gstr_len(s), len_sub = gstr_len(sub), sub_size = end - begin + 1;
+  if (begin < 0 || end > len_s || begin > end)
   {
     return;
   }
   else
   {
+    if (len_sub < end - begin + 1)
+    {
+      realloc(sub->buff, sub_size - len_sub);
+    }
     memcpy(p + begin, sub->buff, (end - begin + 1) * sizeof(char));
   }
 }
@@ -347,7 +362,6 @@ int gstr_skipSpFindStr(gstrc_t s, int pos, gstrc_t sub)
   else
   {
     uint i = pos + 1;
-    gstrv_t dst = gstr_new();
     gstr_removeSpPos(s, pos);
     char *p = s->buff;
     while (i < len)

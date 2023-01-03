@@ -29,6 +29,7 @@ extern "C"
   // 读操作
   int gstr_len(gstrc_t s);
   int gstr_cmp(gstrc_t a, gstrc_t b);
+  int gstr_cmp_byStr(gstrc_t a, const char *b);
   // 返回第一个符合条件的位置
   int gstr_findChr(gstrc_t s, char c);
   int gstr_findStr(gstrc_t s, gstrc_t sub);
@@ -68,7 +69,7 @@ extern "C"
   int gstr_removeSpPos(gstrv_t dst, int pos);
   // 从gstr里面查找并替换全部空格
   int gstr_removeSp(gstrv_t dst);
-  // 将gstr转化为浮点数字，默认顺序为大端存储，即低地址存放的是高位数字
+  // 将gstr转化为浮点数字，默认顺序为大端存储，即低地址存放的是高位数字，返回值0表示输出正常
   int gstr_strToNum(float *dst, gstrv_t src);
 #ifdef __cplusplus
 }
