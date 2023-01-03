@@ -9,7 +9,8 @@ std_cmdlinev_t transform_txtline_cmdline(gstrc_t cmdline)
   // 首先一直查找直到遇到左括号，把这部分去除空格以后变成命令名。
   int cmd = gstr_findChr(cmdline, '(');
   gstr_getSub_byPos(cmdline, cmdname, 0, cmd);
-  
+  //得到了命令名
+
   // 然后提取括号里面的东西，并检查括号是否匹配，取得参数的名称与值，编写名称、值的转化程序。
   read name->cmdline_settype() for ()
   {
@@ -42,4 +43,7 @@ graph_t transform_cmdlist_graph(std_cmdlist_t batcmd)
 }
 void transform_txtline_cmdline_line(gstrc_t line)
 {
+}
+cmdtype_t str_to_cmdtype(gstrc_t cmdname){
+  char*name=
 }

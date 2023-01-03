@@ -14,6 +14,8 @@ extern "C"
   std_cmdlist_t transform_txtcmd_cmdlist(gstrc_t txtcmd);
   //将标准命令列表转成图，包括了对图的修改
   graph_t transform_cmdlist_graph(std_cmdlist_t cmdlist);
+  //把gstr类型转成命令类型cmdtype_t
+  cmdtype_t str_to_cmdtype(gstrc_t cmdname);
 #ifdef __cplusplus
 }
 #endif
