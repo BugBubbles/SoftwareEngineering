@@ -35,11 +35,11 @@ extern "C"
   typedef struct _std_cmdline_ *std_cmdlinev_t;
 
   // 新建一个新建、组合、删除、修改型标准化命令，如果新建和修改应该调用std_cmdline_add_para，组合和删除应该调用std_cmdline_add_handle
-  std_cmdlinev_t std_cmdline_new(cmdtype_t cmdtype, int paranum);
-
+  std_cmdlinev_t std_cmdline_new();
+  // 设定标准化命令的种类
+  void std_cmdline_set_type(std_cmdlinev_t std_cmdline, cmdtype_t cmdtype);
   // 删除一个标准化命令
   void std_cmdline_destroy(std_cmdlinev_t std_cmdline);
-
   // 向新建、修改型命令里面添加、设置参数
   void std_cmdline_add_para(std_cmdlinev_t cmdline, paratype_t paratype, float paraval_1, float paraval_2);
 
