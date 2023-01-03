@@ -21,26 +21,48 @@ std_cmdlinev_t transform_txtline_cmdline(gstrc_t cmdline)
   gstr_removeSp(cmdpara);
   // 首先输入一个字符串，输出一个参数序列，参数类型序列和参数个数，返回值是判定是否有效的int值
   str_to_para(cmdpara, std_cmdline, &paranum);
+  return std_cmdline;
 }
 // 第一步转换，把txt里面的全部行命令string，转化为一串标准命令序列
 std_cmdlist_t transform_txtcmd_cmdlist(gstrc_t txtcmd)
 {
   std_cmdlist_t std_cmdlist = std_cmdline_list_new();
-  while (txtcmd)
+  gstrv_t head = gstr_new();
+  char END[4] = {'e', 'n', 'd'};
+  std_cmdlinev_t std_cmdline;
+  int begin = 0, end = gstr_findChr(txtcmd, '\n');
+  do
   {
-    /* code */
-  }
-  
-  // for ()
-  // {
-  //   read a text line;
-  //   parse line->cmdline
-  //   batcmd_append()
-  // }
+    gstr_getSub_byPos(txtcmd, head, begin, end);
+    gstr_removeSp(head);
+    std_cmdline = transform_txtline_cmdline(head);
+    glst_appendNode(std_cmdlist, std_cmdline);
+  } while (gstr_cmp_byStr(head, END) != 0);
+  return std_cmdlist;
 }
 // 第二步转换，把标准命令序列，转化为图像
-graph_t transform_cmdlist_graph(std_cmdlist_t batcmd)
+graph_t transform_cmdlist_graph(std_cmdlist_t cmdlist)
 {
+  graph_t graph = graph_new();
+  std_cmdlinev_t cmdline;
+  supershape_t supershape;
+  int i = 0, len = glst_len(cmdlist);
+  while (i < len)
+  {
+    glst_getnode(cmdlist, i, cmdline);
+    // switch (cmdline)
+    // {
+    // case /* constant-expression */:
+    //   /* code */
+    //   break;
+
+    // default:
+    //   break;
+    // }
+    // supershape =
+    i++;
+  }
+
   // graph_new() for (i = 0->batcmd_lenght() - 1)
   // {
   //   batcmd_getcmdline()->cmdline switch (cmdline_getcmdtype())

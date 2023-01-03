@@ -42,7 +42,6 @@ extern "C"
   void std_cmdline_destroy(std_cmdlinev_t std_cmdline);
   // 向新建、修改型命令里面添加、设置参数
   void std_cmdline_add_para(std_cmdlinev_t cmdline, paratype_t paratype, float paraval_1, float paraval_2);
-
   // 向组合、删除型命令里面添加、设置参数
   void std_cmdline_add_handle(std_cmdlinev_t std_cmdline, handle_t handle_id);
   // 返回命令的字节数
