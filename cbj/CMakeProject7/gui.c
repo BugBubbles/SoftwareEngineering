@@ -36,6 +36,12 @@ void gui_setpixel(char x, char y, char color){
         oledram[((y >> 3u) << 7u) | x] &= ~((1 << (y & 7)) & 0xff);
     }
 }
+void gui_reverse_color(){
+    int i;
+    for(i = 0; i < 1024; i++){
+        oledram[i] = ~oledram[i];
+    }
+}
 //clear the entire drawing area
 //color: 0:black, nonzero(1,..):white
 void gui_clear(char color){

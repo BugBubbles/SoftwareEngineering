@@ -21,6 +21,7 @@ extern "C"{
     void gui_line(char x1, char y1, char x2, char y2, char color);
     void gui_circle(char xc, char yc, char r, char color);
     void gui_triangle(char x0, char y0, char x1, char y1, char x2, char y2, char color);
+    void gui_reverse_color();
 #ifdef __cplusplus
 }
 #endif // __cplusplus

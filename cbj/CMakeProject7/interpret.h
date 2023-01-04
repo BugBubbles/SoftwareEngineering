@@ -49,6 +49,25 @@ extern "C"{
         }data;
           
     }shape;
+    typedef enum _cmdtype{
+        CMD_DISABLE_SHAPE=0,
+        CMD_ENABLE_DRAW,
+        CMD_POINT,
+        CMD_LINE_START_END,
+        CMD_LINE_START_DIR_LEN,
+        CMD_LINE_START_VECTOR,
+        CMD_RECT_LEFTTOP_RIGHTBOTTOM,
+        CMD_RECT_CENTER_WIDTH_HEIGHT,
+        CMD_RECT_SQUARE,
+        CMD_CIRCLE_CENTER_RADIUS,
+        CMD_CIRCLE_CENTER_DIAM,
+        CMD_TRIANGLE,
+
+    }command;
+    typedef char cli_result;
+#define CMD_EXEC_SUCCESS 0
+#define CMD_INVALID_COMMAND 1
+#define CMD_INVALID_PARAM 2
 #ifdef __cplusplus
 }
 #endif // __cplusplus

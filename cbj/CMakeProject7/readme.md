@@ -126,6 +126,17 @@ void gui_circle(char xc, char yc, char r, char color);
 
 `color`:目标圆边界的颜色,若为黑色,取0.若为白色,取非0值(例如1)
 
+**5 杂项**
+
+```c
+void gui_clear(char color);
+void gui_reverse_color();
+char gui_export_ram_source(const char *filename);
+void gui_export_ram_array(char *buffer);
+```
+
+
+
 ## 2 简易命令行
 
 支持通过命令行在矩形区域上绘图.约定背景为黑色,绘制白色的图像.
@@ -251,9 +262,29 @@ typedef struct _shape{
 
 **1 设置图形是否显示**
 
-`endraw index mode`
+`enabledraw index mode`
 
 修改编号为`index`的图形的`isshow`标记变量为`mode`
+
+**2 显示一个点**
+
+`point index x y`
+
+**3 在当前图像上绘制**
+
+`draw`
+
+**4 刷新图像,重新绘制**
+
+`redraw`
+
+**6 画布反色**
+
+`colorrev`
+
+**7输出文件**
+
+`export`
 
 ### 1 直线命令
 
@@ -279,19 +310,19 @@ typedef struct _shape{
 
 左上角坐标$(x1,y1)$右下角坐标$(x2,y2)$
 
-`rect x1 x2 y1 y2 fill`
+`rect index x1 x2 y1 y2 fill`
 
 **1 中心 高度 宽度**
 
 中心坐标$(x,y)$ 宽度`w` 高度`h`
 
-`rectc x y w h`
+`rectc index x y w h fill`
 
 **2 正方形 中心 边长**
 
 中心坐标$(x,y)$ 边长`a`
 
-`square x y a`
+`square index x y a fill`
 
 ### 3 圆命令
 
@@ -299,13 +330,13 @@ typedef struct _shape{
 
 圆心坐标$(x,y)$ 半径`r `
 
-`circ x y r`
+`circ index x y r`
 
 **1 圆心 直径**
 
 圆心坐标$(x,y)$ 直径`d `
 
-`circd x y d`
+`circd index x y d`
 
 **2 三点圆**
 
@@ -315,7 +346,7 @@ typedef struct _shape{
 
 三点坐标
 
-`triangle x1 y1 x2 y2 x3 y3`
+`triangle index x1 y1 x2 y2 x3 y3`
 
 ### 5 多边形命令 图形平移命令
 
