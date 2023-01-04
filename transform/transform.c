@@ -5,35 +5,64 @@
 std_cmdlinev_t transform_txtline_cmdline(gstrc_t cmdline)
 {
   gstrv_t cmdname = gstr_new();
-  // std_cmdlinev_t std_cmdline = std_cmdline_new();
+  std_cmdlinev_t std_cmdline = std_cmdline_new();
   // 首先一直查找直到遇到左括号，把这部分去除空格以后变成命令名。
   int cmd = gstr_findChr(cmdline, '(');
   gstr_getSub_byPos(cmdline, cmdname, 0, cmd);
   gstr_removeSp(cmdname);
   // cmdname里面装得就是命令名
   cmdtype_t cmdtype = str_to_cmdtype(cmdname);
+  gstr_destroy(cmdname);
+  std_cmdline_set_type(std_cmdline, cmdtype);
   // 然后提取括号里面的东西，并检查括号是否匹配，取得参数的名称与值，编写名称、值的转化程序。
+  int len = gstr_len(cmdline), paranum = 0;
+  gstrv_t cmdpara = gstr_new();
+  gstr_getSub_byPos(cmdline, cmdpara, cmd + 1, len - 1);
+  gstr_removeSp(cmdpara);
   // 首先输入一个字符串，输出一个参数序列，参数类型序列和参数个数，返回值是判定是否有效的int值
-
-  // read name->cmdline_settype() for ()
-  // {
-  //   para->cmdline_append_para()
-  // }
+  str_to_para(cmdpara, std_cmdline, &paranum);
+  return std_cmdline;
 }
 // 第一步转换，把txt里面的全部行命令string，转化为一串标准命令序列
 std_cmdlist_t transform_txtcmd_cmdlist(gstrc_t txtcmd)
 {
-  // batcmd_new();
-  // for ()
-  // {
-  //   read a text line;
-  //   parse line->cmdline
-  //   batcmd_append()
-  // }
+  std_cmdlist_t std_cmdlist = std_cmdline_list_new();
+  gstrv_t head = gstr_new();
+  char END[4] = {'e', 'n', 'd'};
+  std_cmdlinev_t std_cmdline;
+  int begin = 0, end = gstr_findChr(txtcmd, '\n');
+  do
+  {
+    gstr_getSub_byPos(txtcmd, head, begin, end);
+    gstr_removeSp(head);
+    std_cmdline = transform_txtline_cmdline(head);
+    glst_appendNode(std_cmdlist, std_cmdline);
+  } while (gstr_cmp_byStr(head, END) != 0);
+  return std_cmdlist;
 }
 // 第二步转换，把标准命令序列，转化为图像
-graph_t transform_cmdlist_graph(std_cmdlist_t batcmd)
+graph_t transform_cmdlist_graph(std_cmdlist_t cmdlist)
 {
+  graph_t graph = graph_new();
+  std_cmdlinev_t cmdline;
+  supershape_t supershape;
+  int i = 0, len = glst_len(cmdlist);
+  while (i < len)
+  {
+    glst_getnode(cmdlist, i, cmdline);
+    // switch (cmdline)
+    // {
+    // case /* constant-expression */:
+    //   /* code */
+    //   break;
+
+    // default:
+    //   break;
+    // }
+    // supershape =
+    i++;
+  }
+
   // graph_new() for (i = 0->batcmd_lenght() - 1)
   // {
   //   batcmd_getcmdline()->cmdline switch (cmdline_getcmdtype())
@@ -115,7 +144,7 @@ paratype_t str_to_paratype(gstrc_t paraname)
     return _ERROR;
   }
 }
-int str_to_para(gstrc_t str_para, glstv_t paraval, glstv_t paratype, int *paranum)
+int str_to_para(gstrc_t str_para, std_cmdlinev_t std_cmdline, int *paranum)
 {
   // 判断括号、引号闭合
   int pos = 0;
@@ -154,13 +183,12 @@ int str_to_para(gstrc_t str_para, glstv_t paraval, glstv_t paratype, int *paranu
   {
     brac_index = 0;
     pomma_index = 0;
-    glstv_t paratype, paraval;
-    int paranum;
-    point_t point_vector_para;
+    int number_index = 0;
+    paratype_t paratype;
     float para_1, para_2;
-    for (pos = 0; pos < len; pos++)
+    for (pos = 0; pos < len;)
     {
-      if (gstr_getChr(str_para, pos) == '\'' && pomma_index == 0)
+      if (gstr_getChr(str_para, pos) == '\'' && pomma_index == 0) // 取得参数名
       {
         pomma_index = pos;
       }
@@ -168,9 +196,12 @@ int str_to_para(gstrc_t str_para, glstv_t paraval, glstv_t paratype, int *paranu
       {
         gstrv_t temp = gstr_new_bySize(pos - pomma_index + 1);
         gstr_getSub_byPos(str_para, temp, brac_index, pos);
+        paratype = str_to_paratype(temp);
+        gstr_destroy(temp);
         pomma_index = 0;
+        *paranum = *paranum + 1;
       }
-      if (gstr_getChr(str_para, pos) == '(' && gstr_getChr(str_para, pos - 1) == ':')
+      else if (gstr_getChr(str_para, pos) == '(' && gstr_getChr(str_para, pos - 1) == ':')
       {
         brac_index = pos;
       }
@@ -180,29 +211,49 @@ int str_to_para(gstrc_t str_para, glstv_t paraval, glstv_t paratype, int *paranu
         gstr_getSub_byPos(str_para, temp, brac_index, pos); // 得到的是向量或者点的x值gstr
         if (~gstr_strToNum(&para_1, temp))
         {
-          point_vector_para.x_val = para_1;
+          brac_index = pos;
+          gstr_destroy(temp);
         }
         else
         {
-          // 返回值不为0，则出错了
+          gstr_destroy(temp);
+          return -1; // 返回值不为0，则出错了
         }
-        brac_index = pos;
-        gstr_destroy(temp);
       }
       else if (gstr_getChr(str_para, pos) == ')' && brac_index != 0) // 得到的是向量或者点的y值
       {
         gstrv_t temp = gstr_new_bySize(pos - brac_index + 1);
         gstr_getSub_byPos(str_para, temp, brac_index, pos); // 得到的是向量或者点的y值gstr
-        if (~gstr_strToNum(&para_1, temp))
+        if (~gstr_strToNum(&para_2, temp))
         {
-          point_vector_para.y_val = para_1;
+          brac_index = 0;
+          gstr_destroy(temp);
+          std_cmdline_add_para(std_cmdline, paratype, para_1, para_2);
         }
         else
         {
-          // 返回值不为0，则出错了
+          gstr_destroy(temp);
+          return -1; // 返回值不为0，则出错了
         }
-        brac_index = 0;
-        gstr_destroy(temp);
+      }
+      else if (is_number(gstr_getChr(str_para, pos)) == 1 && gstr_getChr(str_para, pos + 1) == ':')
+      {
+        number_index = pos;
+        pos = gstr_skipSpFindChr(str_para, pos, ')');
+        int temp_pos = gstr_skipSpFindChr(str_para, pos, ',');
+        pos = (temp_pos < pos && temp_pos != -1) ? temp_pos : pos;
+        gstrv_t temp = gstr_new_bySize(pos - number_index + 1);
+        gstr_getSub_byPos(str_para, temp, number_index, pos); // 得到的是向量或者点的x值gstr
+        if (~gstr_strToNum(&para_1, temp))
+        {
+          std_cmdline_add_para(std_cmdline, paratype, para_1, para_2);
+          gstr_destroy(temp);
+        }
+        else
+        {
+          gstr_destroy(temp);
+          return -1; // 返回值不为0，则出错了
+        }
       }
     }
     return 0;

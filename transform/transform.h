@@ -19,7 +19,7 @@ extern "C"
   // 把gstr类型转成命令类型paratype_t
   paratype_t str_to_paratype(gstrc_t paraname);
   // 把gstr类型转成参数序列与参数类型序列
-  int str_to_para(gstrc_t str_para, glstv_t paraval, glstv_t paratype, int *paranum);
+  int str_to_para(gstrc_t str_para, std_cmdlinev_t std_cmdline, int *paranum);
 #ifdef __cplusplus
 }
 #endif

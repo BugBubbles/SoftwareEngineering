@@ -26,11 +26,14 @@ typedef union tag_paraval
   float angle;
 } paraval_t;
 
-std_cmdlinev_t std_cmdline_new(cmdtype_t cmdtype, int paranum)
+std_cmdlinev_t std_cmdline_new()
 {
   std_cmdlinev_t std_cmdline = (std_cmdlinev_t)malloc(sizeof(_std_cmdline_));
+  std_cmdline->paralist = glst_new(sizeof(paraval_t));
+}
+void std_cmdline_set_type(std_cmdlinev_t std_cmdline, cmdtype_t cmdtype)
+{
   std_cmdline->cmdtype = cmdtype;
-  std_cmdline->paralist = glst_new_bySize(sizeof(paraval_t), paranum);
 }
 void std_cmdline_destroy(std_cmdlinev_t std_cmdline)
 {
