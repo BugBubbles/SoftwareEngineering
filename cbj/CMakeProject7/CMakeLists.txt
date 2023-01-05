@@ -8,4 +8,5 @@ if(MSVC)
 add_compile_options("/J")
 endif()
 # Add source to this project's executable.
-add_executable (CMakeProject7 "main.c" "interpret.c" "gui.c")
+add_executable (cbj0 "main.c" "interpret.c" "gui.c")
+add_library (cbj1 SHARED "interpret.c" "gui.c")

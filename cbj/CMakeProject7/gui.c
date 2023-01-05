@@ -14,9 +14,18 @@ char gui_export_ram_source(const char *filename){
         }
         fprintf(fp, "0x%x};\n", oledram[1023]);
         fclose(fp);
-        return 1;
+        return 0;
     }
-    return 0;//invalid file operation
+    return 3;//invalid file operation
+}
+char gui_export_ram_binary(const char *filename){
+    FILE *fp = fopen(filename, "wb");
+    if(fp){
+        fwrite(oledram, 1, 1024, fp);
+        fclose(fp);
+        return 0;
+    }
+    return 3;//invalid file operation
 }
 #endif // _WIN32
 

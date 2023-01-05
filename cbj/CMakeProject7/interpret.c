@@ -31,6 +31,7 @@ cli_result cli_handler(const char *source){
     char cmdname[32] = { 0 };
     char buffer[32] = { 0 };
     char args[16] = { 0 };
+    char output[1024] = { 0 };
     cli_result result = 0;
     k = sscanf(source, "%s", cmdname);
     cmdindex = matchcmd(cmdname, 0);//match commands without params first
@@ -47,6 +48,11 @@ cli_result cli_handler(const char *source){
                 gui_reverse_color();
                 break;
             case 3://export
+                result = gui_export_ram_binary("oled_tmp.bin");
+                if(result){
+                    return CMD_INVALID_OPERATION;
+                }
+                result = gui_export_ram_source("oled_tmp.c");
                 break;
             default:
                 break;

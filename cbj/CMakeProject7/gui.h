@@ -10,6 +10,7 @@ extern "C"{
     //export the current OLED display RAM to specific c source file
 #ifdef _WIN32
     char gui_export_ram_source(const char *filename);
+    char gui_export_ram_binary(const char *filename);
 #endif // _WIN32
 
     void gui_export_ram_array(char *buffer);

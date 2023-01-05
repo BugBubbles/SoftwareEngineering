@@ -65,9 +65,11 @@ extern "C"{
 
     }command;
     typedef char cli_result;
+    __declspec(dllexport) cli_result __cdecl cli_handler(const char *source);
 #define CMD_EXEC_SUCCESS 0
 #define CMD_INVALID_COMMAND 1
 #define CMD_INVALID_PARAM 2
+#define CMD_INVALID_OPERATION 3
 #ifdef __cplusplus
 }
 #endif // __cplusplus
