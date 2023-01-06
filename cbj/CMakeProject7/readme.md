@@ -353,3 +353,9 @@ typedef struct _shape{
 时间紧就先不实现
 
 ## 3 图形接口(GUI)
+
+
+
+![gui](D:\cprog\SoftwareEngineering\cbj\CMakeProject7\gui.png)
+
+简易命令行,输入命令,将命令显示在文本框中,输出执行结果,单击预览oled图可以预览执行命令的结果.

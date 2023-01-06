@@ -20,7 +20,7 @@ int main(){
     gui_export_ram_binary("../../cbj0.bin");*/
     HINSTANCE hinst = LoadLibraryA("cbj1.dll");
     if(hinst){
-        char(__cdecl * cli_handler)(char *cmd) = GetProcAddress(hinst, "cli_handler");
+        char(__cdecl * cli_handler)(char *cmd) = (void *)GetProcAddress(hinst, "cli_handler");
         char res = cli_handler("line 1 10 20 30 50");
         printf("%d\n", res);
         res = cli_handler("square 0 40 40 30 1");

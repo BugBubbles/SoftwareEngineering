@@ -5,7 +5,7 @@
 static shape shape_array[MAX_SHAPE_COUNT] = { 0 };
 //supported commands
 static const char *cmdstr_havearg[12] = { "disable","enabledraw","point","line","linevl","linev","rect","rectc","square","circ","circd","triangle" };
-static const char *cmdstr_noarg[4] = { "draw","redraw","colorrev","export" };
+static const char *cmdstr_noarg[5] = { "draw","redraw","colorrev","export","clear" };
 static void cli_draw();
 static cli_result cli_getparam(const char *source, command cmdtype);
 char matchcmd(char *input, char havearg){
@@ -18,7 +18,7 @@ char matchcmd(char *input, char havearg){
         }
     }
     else{
-        for(i = 0; i < 4; i++){
+        for(i = 0; i < 5; i++){
             if(!strcmp(cmdstr_noarg[i], input)){
                 return i;
             }
@@ -53,6 +53,9 @@ cli_result cli_handler(const char *source){
                     return CMD_INVALID_OPERATION;
                 }
                 result = gui_export_ram_source("oled_tmp.c");
+                break;
+            case 4://clear
+                gui_clear(0);
                 break;
             default:
                 break;
@@ -166,8 +169,8 @@ static cli_result cli_getparam(const char *source, command cmdtype){
                 shape_array[index].isshow = 1;
                 shape_array[index].data.lin.x1 = args[0];
                 shape_array[index].data.lin.y1 = args[1];
-                shape_array[index].data.lin.x2 = args[0] + args[2];
-                shape_array[index].data.lin.y2 = args[1] + args[3];
+                shape_array[index].data.lin.x2 = args[2];
+                shape_array[index].data.lin.y2 = args[3];
                 return CMD_EXEC_SUCCESS;
             }
         case CMD_RECT_CENTER_WIDTH_HEIGHT:
