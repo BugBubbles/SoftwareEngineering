@@ -388,7 +388,5 @@ typedef struct _shape{
 实现功能：从标准数据结构到完整的图形结构体的实现代码，也包含了为创建的图形配置坐标系，以方便旋转、平移等功能的实现，创建的坐标系之间也可以求解相对位置关系，以实现最终的绝对坐标系（屏幕像素坐标系）下的图形绘制。
 
 包含文件：my_basedshapes.c , my_basedshapes.h , my_graph.c , my_graph.h , my_supershapes.c , my_supershapes.h；
-### 4.6 各子模块层级关系
-
 
 ## 5	分工
