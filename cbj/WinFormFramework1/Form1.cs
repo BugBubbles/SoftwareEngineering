@@ -75,5 +75,35 @@ namespace WinFormFramework1 {
                 MessageBox.Show("input file not ready", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnbatch_Click(object sender, EventArgs e) {
+            try {
+                using(StreamReader sr = new StreamReader("batch.txt", Encoding.UTF8)) {
+                    while(!sr.EndOfStream) {
+                        string s = sr.ReadLine();
+                        tbcmd.AppendText(s);
+                        tbcmd.AppendText("\r\n");
+                        byte result = Execute(s);
+                        switch(result) {
+                        case 1:
+                            tbcmd.AppendText("invalid command\r\n");
+                            break;
+                        case 2:
+                            tbcmd.AppendText("invalid parameter\r\n");
+                            break;
+                        case 3:
+                            tbcmd.AppendText("file system error\r\n");
+                            break;
+                        default:
+                            tbcmd.AppendText("success\r\n");
+                            break;
+                        }
+                    }
+                }
+            }
+            catch(Exception ex) {
+                MessageBox.Show("input file not ready", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

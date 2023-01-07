@@ -30,6 +30,7 @@
             this.btnexec = new System.Windows.Forms.Button();
             this.picresult = new System.Windows.Forms.PictureBox();
             this.btnclear = new System.Windows.Forms.Button();
+            this.btnbatch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picresult)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,11 +98,22 @@
             this.btnclear.UseVisualStyleBackColor = true;
             this.btnclear.Click += new System.EventHandler(this.btnclear_Click);
             // 
+            // btnbatch
+            // 
+            this.btnbatch.Location = new System.Drawing.Point(417, 271);
+            this.btnbatch.Name = "btnbatch";
+            this.btnbatch.Size = new System.Drawing.Size(75, 23);
+            this.btnbatch.TabIndex = 12;
+            this.btnbatch.Text = "批处理";
+            this.btnbatch.UseVisualStyleBackColor = true;
+            this.btnbatch.Click += new System.EventHandler(this.btnbatch_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(499, 294);
+            this.Controls.Add(this.btnbatch);
             this.Controls.Add(this.btnclear);
             this.Controls.Add(this.picresult);
             this.Controls.Add(this.btnexec);
@@ -126,6 +138,7 @@
         private System.Windows.Forms.PictureBox picresult;
         private System.Windows.Forms.Button btnclear;
         private System.Windows.Forms.TextBox tbinput;
+        private System.Windows.Forms.Button btnbatch;
     }
 }
 
