@@ -1,0 +1,10 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "本地计算机": [
+      "CMakeProject7\\out\\build\\x64-Debug",
+      "CMakeProject7\\out\\install\\x64-Debug",
+      "CMakeProject7\\out\\build\\x64-Release",
+      "CMakeProject7\\out\\install\\x64-Release"
+    ]
+  }
+}
