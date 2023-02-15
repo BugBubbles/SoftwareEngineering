@@ -360,7 +360,7 @@ typedef struct _shape{
 
 
 
-![gui](D:\cprog\SoftwareEngineering\cbj\CMakeProject7\gui.png)
+![gui](gui.png)
 
 简易命令行,输入命令,将命令显示在文本框中,输出执行结果,单击预览oled图可以预览执行命令的结果.
 
@@ -389,4 +389,14 @@ typedef struct _shape{
 
 包含文件：my_basedshapes.c , my_basedshapes.h , my_graph.c , my_graph.h , my_supershapes.c , my_supershapes.h；
 
-## 5	分工
+## 5  交叉耦合情况分析
+在整个程序的编写过程中，由于我们并没有特别留意，所以在程序的编写过程中，相当部分的头文件和源文件存在着较为严重的交叉引用，程序产生了交叉耦合，不便于调试和代码的更新。这是本程序作业的一个较为不好的部分。
+## 6	分工
+|分工|成员姓名|完成情况|
+|:---:|:---:|:---:|
+|命令序列解码|陈博非|完成|
+|基本形状|张国勇|完成|
+|通用线性表|牛泽坤|完成|
+|数学几何运算模块|梁耀星|完成|
+|标准化数据序列|李翔|完成|
+|图形用户界面|曹北健|完成|
